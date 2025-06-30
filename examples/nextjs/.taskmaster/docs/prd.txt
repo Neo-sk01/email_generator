@@ -1,0 +1,68 @@
+# PRD: AI-Powered Personalized Cold Email Outreach System
+
+## 1. Title
+AI-Powered Personalized Cold Email Outreach System
+
+## 2. Objective
+To design and implement a multi-agent system that automates the generation of highly personalized cold emails. This system will leverage Langbase's Composable AI and Workflow primitives to increase outreach efficiency, improve email engagement rates, and reduce the manual effort required by sales and marketing teams.
+
+## 3. Background
+Traditional cold outreach is time-consuming and often yields low response rates due to generic messaging. By using a multi-agent system, we can create a scalable workflow that researches each lead individually and crafts a unique message based on current, relevant information, thereby increasing the likelihood of a positive response.
+
+## 4. Target Audience
+*   **Sales Development Representatives (SDRs)**: To help them scale their outreach efforts without sacrificing quality.
+*   **Marketing Teams**: To enable personalized, account-based marketing campaigns at scale.
+
+## 5. Scope
+### In Scope:
+*   Ingestion of a lead list from a CSV file.
+*   Orchestration of four specific Langbase pipes: `csv-parser-agent`, `web-research-agent`, `cold-email-gpt`, and `csv-email-orchestrator`.
+*   Implementation of the core logic using the Langbase Workflow primitive.
+*   Generation of a new CSV or JSON file containing the original lead data enriched with the personalized email copy.
+*   A simple web-based graphical user interface (GUI) to manage the workflow.
+
+### Out of Scope (for this version):
+*   Directly sending emails from within the system.
+*   Real-time performance monitoring dashboard.
+
+## 6. Functional Requirements & Features
+
+### FR1: Lead Data Ingestion
+*   **Description**: The system must accept a CSV file containing lead information (e.g., name, company name, email address).
+*   **Acceptance Criteria**: The system successfully reads and loads the data from a specified CSV file path.
+
+### FR2: Multi-Agent Workflow Orchestration
+*   **Description**: The system will use the Langbase Workflow primitive to manage the sequence of operations. The workflow will be structured as follows:
+    1.  **Step 1: Parse CSV**: The `csv-parser-agent` will be invoked to process the raw CSV data into a structured format (e.g., an array of JSON objects).
+    2.  **Step 2: Research & Generate (per lead)**: The workflow will iterate through each lead and perform the following sub-steps sequentially:
+        a. **Web Research**: The `web-research-agent` will take the lead's company name to find recent news or relevant articles for personalization.
+        b. **Email Generation**: The `cold-email-gpt` pipe will take the structured lead data and the research findings to generate a personalized email draft.
+    3.  **Step 3: Final Orchestration**: The `csv-email-orchestrator` will collect the generated email for each lead and compile the final output.
+*   **Acceptance Criteria**: The workflow executes successfully from start to finish, with each pipe being called in the correct order and the output of one pipe being correctly passed as input to the next.
+
+### FR3: Output Generation
+*   **Description**: The system must produce a structured output file (CSV or JSON) containing the original lead data plus the newly generated personalized email.
+*   **Acceptance Criteria**: An output file is created in the specified format and contains all the original leads with their corresponding generated emails.
+
+### FR4: Graphical User Interface (GUI)
+*   **Description**: A web page will be created within the existing Next.js application to provide a user-friendly way to interact with the email personalization workflow.
+*   **Acceptance Criteria**:
+    *   Users can upload a CSV file through a file input.
+    *   A "Start Workflow" button triggers the backend process.
+    *   The status of the workflow is displayed (e.g., "Processing lead 5 of 100...").
+    *   Once complete, the results (personalized emails) are displayed in a table on the page.
+    *   A button is available to download the results as a new CSV file.
+
+## 7. Technical Architecture
+*   The system will be built on the **Langbase Composable AI** paradigm, ensuring each component (Pipe) is modular, swappable, and independently observable.
+*   The core orchestration logic will be implemented using the **Langbase Workflow SDK**, which provides durability, error handling (retries/timeouts), and clear step-by-step logging.
+*   State will be managed within the Workflow execution, ensuring that data like the summary and sentiment from one step are available to subsequent steps.
+
+## 8. Success Metrics
+*   **Processing Reliability**: The system should successfully process a batch of 100 leads with a >95% success rate.
+*   **Personalization Quality**: A qualitative review of 20 randomly sampled emails shows a high degree of personalization that is relevant and context-aware.
+*   **Efficiency**: The time to process 100 leads is at least 10x faster than the estimated manual process.
+
+## 9. Future Considerations
+*   **Memory Integration**: Implement a Langbase `Memory` store to track contacted leads to prevent duplicates and build long-term context.
+*   **A/B Testing**: Introduce the ability to A/B test different versions of the `cold-email-gpt` pipe to optimize for open and response rates. 

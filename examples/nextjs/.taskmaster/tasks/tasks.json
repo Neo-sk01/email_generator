@@ -1,0 +1,445 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repository and Core Infrastructure",
+        "description": "Initialize the project repository, install required dependencies, and configure the development environment for the Next.js application and Langbase SDK integration.",
+        "details": "Create a new Next.js project using `npx create-next-app@latest`. Install the Langbase SDK with `npm install langbase@latest`. Set up a basic project structure with directories for components, pages, and API routes. Configure environment variables for Langbase API keys and workflow settings. Use TypeScript for type safety and maintainability. Initialize a Git repository and add a `.gitignore` file. Recommended: Next.js v14, Langbase SDK v1.0.0+, TypeScript v5.0+.",
+        "testStrategy": "Verify project creation by running `npm run dev` and checking the default Next.js page loads. Confirm Langbase SDK installation by importing and logging a test function. Check environment variable setup by logging a test value.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Next.js Project",
+            "description": "Set up a new Next.js project using the recommended tooling.",
+            "dependencies": [],
+            "details": "Use the command `npx create-next-app@latest <project-name>` to scaffold a new Next.js application. Ensure Node.js (version 18 or higher) is installed before proceeding.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Install Project Dependencies",
+            "description": "Install all required dependencies for the Next.js project.",
+            "dependencies": [
+              1
+            ],
+            "details": "Navigate into the project directory and run `npm install` to ensure all dependencies specified in package.json are installed. Add any additional dependencies as needed for your stack.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure TypeScript",
+            "description": "Set up TypeScript for type safety and improved developer experience.",
+            "dependencies": [
+              2
+            ],
+            "details": "If not already included, install TypeScript and the necessary type definitions (`npm install --save-dev typescript @types/react @types/node`). Run the project to auto-generate a tsconfig.json, and migrate starter files from .js to .tsx/.ts as appropriate.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Set Up Environment Variables",
+            "description": "Configure environment variable support for the project.",
+            "dependencies": [
+              3
+            ],
+            "details": "Create a `.env.local` file in the root directory for local environment variables. Define variables following Next.js conventions (e.g., `NEXT_PUBLIC_API_URL`). Ensure sensitive values are not committed to version control.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Structure Project Directories",
+            "description": "Organize the project directory structure for scalability and maintainability.",
+            "dependencies": [
+              4
+            ],
+            "details": "Create and organize directories such as `pages`, `public`, `components`, `styles`, and `utils` according to best practices. Move or create starter files as needed.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Initialize Git Repository",
+            "description": "Set up version control for the project using Git.",
+            "dependencies": [
+              5
+            ],
+            "details": "If not already initialized, run `git init` in the project root. Add all files with `git add .`, commit with a descriptive message, and connect to a remote repository if applicable. Push the initial commit to the remote repository.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement CSV Lead Ingestion and Parsing",
+        "description": "Develop functionality to accept a CSV file, parse its contents, and convert lead data into a structured format for processing.",
+        "details": "Create a file upload component in the Next.js frontend. Use the `papaparse` library (v5.4.0+) for client-side CSV parsing. Alternatively, handle file uploads via an API route and parse server-side with `csv-parser` (v3.0.0+). Validate file format and required fields (name, company, email). Convert parsed data to an array of JSON objects. Integrate with the Langbase `csv-parser-agent` pipe for additional validation or transformation if needed.",
+        "testStrategy": "Upload a test CSV file and verify the data is parsed and displayed in the UI. Check for error handling with malformed files. Confirm JSON output matches expected structure.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Build CSV Upload UI",
+            "description": "Design and implement a user interface component that allows users to select and upload CSV files.",
+            "dependencies": [],
+            "details": "The UI should include a file input element restricted to CSV file types and provide clear instructions to the user. Consider using the 'accept' attribute to limit selectable file types to '.csv'.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Validate File Type Client-Side",
+            "description": "Implement client-side validation to ensure only valid CSV files are accepted before upload.",
+            "dependencies": [
+              1
+            ],
+            "details": "Check the file extension and MIME type upon selection. Provide immediate feedback if the file is not a valid CSV, preventing further processing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Parse CSV Client-Side",
+            "description": "Parse the uploaded CSV file in the browser to extract data and preview its structure.",
+            "dependencies": [
+              2
+            ],
+            "details": "Use a library such as PapaParse to read and parse the CSV file, handling delimiters, quoted fields, and encoding. Display a preview of the parsed data to the user for confirmation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Validate Required Fields",
+            "description": "Check that all required columns and fields are present and valid in the parsed CSV data.",
+            "dependencies": [
+              3
+            ],
+            "details": "Define a schema or list of required fields. Validate the parsed data against this schema, highlighting missing or invalid fields to the user.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Convert CSV Data to JSON",
+            "description": "Transform the validated CSV data into JSON format for further processing or transmission.",
+            "dependencies": [
+              4
+            ],
+            "details": "Map each row of the CSV to a JSON object using the header row as keys. Ensure proper handling of data types and nested structures if necessary.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Handle Server-Side Parsing and Validation",
+            "description": "Implement backend logic to receive, parse, and validate CSV files, ensuring robust error handling and support for large files.",
+            "dependencies": [
+              5
+            ],
+            "details": "Accept file uploads via an API endpoint. Use a server-side CSV parsing library to process the file, validate its structure, and handle edge cases such as encoding issues or malformed rows.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Integrate with Langbase for Further Processing",
+            "description": "Send the processed and validated JSON data to Langbase for downstream tasks such as enrichment, analysis, or storage.",
+            "dependencies": [],
+            "details": "Implement API integration with Langbase, ensuring data is formatted according to their requirements. Handle responses and errors gracefully, providing feedback to the user as needed.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Build Multi-Agent Workflow Orchestration",
+        "description": "Implement the core workflow logic to orchestrate the sequence of Langbase pipes for lead research and email generation.",
+        "details": "Use the Langbase Workflow SDK to define a workflow that: 1) Invokes `csv-parser-agent` to process raw CSV data, 2) Iterates through each lead, calling `web-research-agent` for company research, 3) Passes research results and lead data to `cold-email-gpt` for personalized email generation, 4) Collects results with `csv-email-orchestrator`. Implement error handling, retries, and logging for each step. Use the Langbase `pipes.run()` method for pipe execution. Store intermediate state within the workflow for traceability.",
+        "testStrategy": "Run the workflow with a small set of test leads. Verify each pipe is called in sequence and receives correct input. Check logs for errors and retries. Confirm output contains all expected data for each lead.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Workflow Steps",
+            "description": "Identify and document each step required in the workflow, including the sequence and dependencies between steps.",
+            "dependencies": [],
+            "details": "List all major actions, decision points, and transitions. Ensure clarity on the order and purpose of each step.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Integrate Langbase Pipes",
+            "description": "Integrate each Langbase pipe into the corresponding workflow step, ensuring correct data flow and configuration.",
+            "dependencies": [
+              1
+            ],
+            "details": "For each workflow step, connect the appropriate Langbase pipe, configure input/output, and validate integration points.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Iteration Over Leads",
+            "description": "Develop logic to iterate over a collection of leads, applying the workflow steps to each lead instance.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Ensure the workflow can process multiple leads in parallel or sequentially as required, handling batching and concurrency.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Manage Intermediate State",
+            "description": "Design and implement mechanisms to track and persist the intermediate state of each lead as it progresses through the workflow.",
+            "dependencies": [
+              3
+            ],
+            "details": "Use appropriate data structures or storage solutions to maintain state, enabling recovery and traceability.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add Error Handling and Retries",
+            "description": "Implement robust error handling and retry logic for each workflow step and integration point.",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Define error types, retry strategies, and fallback mechanisms to ensure reliability and resilience.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Logging",
+            "description": "Add comprehensive logging throughout the workflow to capture execution details, errors, and state transitions.",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Ensure logs are structured, searchable, and provide sufficient context for debugging and monitoring.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Test Workflow with Sample Data",
+            "description": "Develop and execute tests using sample data to validate the workflow logic, integrations, and error handling.",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "details": "Create test cases covering normal operation, edge cases, and failure scenarios. Verify outputs and system behavior.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Review and Optimize Workflow Orchestration",
+            "description": "Analyze workflow performance, traceability, and reliability; optimize sequencing and resource usage as needed.",
+            "dependencies": [],
+            "details": "Identify bottlenecks, improve parallelism or sequencing, and refine error handling based on test results and logs.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Develop Output Generation and Download",
+        "description": "Create functionality to compile and export the enriched lead data with personalized emails as a CSV or JSON file.",
+        "details": "After workflow completion, collect all enriched lead data (original fields plus generated email). Use `json2csv` (v5.0.0+) or native CSV generation for output. Provide a download button in the UI to export the results. Support both CSV and JSON formats as specified in the PRD. Ensure the output file contains all original leads and their corresponding emails.",
+        "testStrategy": "Trigger the workflow and verify the output file is generated and downloadable. Check file contents for completeness and correctness. Test both CSV and JSON export options.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Collect Workflow Results",
+            "description": "Gather and validate the results produced by the workflow to ensure all necessary data is available for output generation.",
+            "dependencies": [],
+            "details": "This involves interfacing with the workflow engine or data source, handling errors, and ensuring data completeness before proceeding to formatting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Format Data for CSV and JSON",
+            "description": "Transform the collected workflow results into both CSV and JSON formats, ensuring correct structure and data integrity.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement data serialization logic for CSV (handling delimiters, escaping, headers) and JSON (ensuring valid syntax and structure).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement File Generation Logic",
+            "description": "Develop the backend logic to generate downloadable files in CSV and JSON formats from the formatted data.",
+            "dependencies": [
+              2
+            ],
+            "details": "This includes writing files to disk or memory, managing file naming conventions, and handling large datasets efficiently.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Build Download UI",
+            "description": "Create a user interface component that allows users to select and download the generated CSV and JSON files.",
+            "dependencies": [
+              3
+            ],
+            "details": "Design and implement UI elements such as buttons or links, provide feedback on download status, and ensure accessibility.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Test File Contents for Correctness",
+            "description": "Verify that the generated files contain accurate, complete, and correctly formatted data in both CSV and JSON formats.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Perform automated and manual tests to check file integrity, data accuracy, and compatibility with common tools (e.g., Excel, JSON parsers).",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Web-Based GUI for Workflow Management",
+        "description": "Build a user-friendly web interface for uploading leads, starting workflows, monitoring progress, and viewing/downloading results.",
+        "details": "Create a Next.js page with: 1) File upload component, 2) 'Start Workflow' button, 3) Progress indicator (e.g., 'Processing lead 5 of 100...'), 4) Results table displaying lead data and generated emails, 5) Download button for results. Use React hooks for state management. Connect UI to backend API routes for file upload and workflow execution. Ensure responsive design and clear user feedback.",
+        "testStrategy": "Test file upload, workflow initiation, progress display, and results rendering. Verify download functionality. Check UI responsiveness and error handling. Conduct user acceptance testing with target audience.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design UI Layout",
+            "description": "Create wireframes and mockups for the application's main interface, ensuring logical placement of all components such as file upload, workflow controls, progress indicators, results display, and download options.",
+            "dependencies": [],
+            "details": "Define the visual hierarchy and user flow. Ensure the design accommodates all required features and is intuitive for users.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Build File Upload Component",
+            "description": "Develop the component that allows users to select and upload files, supporting drag-and-drop and manual selection.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement file validation, feedback for unsupported formats, and integration with backend upload endpoints.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Workflow Initiation",
+            "description": "Add controls for users to start the processing workflow after file upload, including any necessary configuration options.",
+            "dependencies": [
+              2
+            ],
+            "details": "Ensure the workflow initiation triggers backend processing and handles state transitions appropriately.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add Progress Indicators",
+            "description": "Integrate real-time progress indicators to inform users about the status of file upload and workflow execution.",
+            "dependencies": [
+              3
+            ],
+            "details": "Display upload progress, processing status, and handle intermediate states such as waiting or errors.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Render Results",
+            "description": "Develop the UI components to display results returned from the backend after workflow completion.",
+            "dependencies": [
+              4
+            ],
+            "details": "Support various result formats (text, tables, images) and ensure clear presentation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Enable Downloads",
+            "description": "Implement functionality for users to download processed results in supported formats.",
+            "dependencies": [
+              5
+            ],
+            "details": "Provide clear download buttons and handle multiple file types as needed.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Ensure Responsive Design and Error Handling",
+            "description": "Optimize the UI for different devices and screen sizes, and implement robust error handling for all user interactions.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "details": "Test responsiveness, provide user-friendly error messages, and ensure graceful recovery from failures.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-30T12:36:11.806Z",
+      "updated": "2025-06-30T12:36:11.806Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

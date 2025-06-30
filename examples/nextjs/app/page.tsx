@@ -1,21 +1,15 @@
-import RunNonStreamExample from '@/components/langbase/run';
-import RunStreamExample from '@/components/langbase/run-stream';
+import Link from 'next/link';
 
 export default function Home() {
-	return (
-		<div className="flex min-h-screen flex-col items-center justify-between p-24">
-			<div className="flex flex-col items-center justify-between gap-10 max-w-lg w-full">
-				<div className="flex flex-col gap-1 w-full">
-					<h2 className="text-2xl font-bold tracking-tight">
-						⌘ Langbase AI Pipe
-					</h2>
-					<p className="text-muted-foreground">
-						An AI agent that responds to your prompts.
-					</p>
-				</div>
-				<RunStreamExample />
-				<RunNonStreamExample />
-			</div>
-		</div>
-	);
-}
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
+      <h1 className="text-4xl font-bold mb-4">Welcome</h1>
+      <p className="mb-8">
+        The email generation tool has been moved.
+      </p>
+      <Link href="/multi-agent-workflow" className="px-6 py-3 bg-blue-600 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
+        Go to AI Email Generator
+      </Link>
+    </div>
+  );
+} 
