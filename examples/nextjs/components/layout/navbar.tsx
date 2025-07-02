@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 export const Navbar = () => {
   return (
@@ -7,7 +8,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-white font-bold text-xl">
-              AI Email Generator
+              <Logo />
             </Link>
           </div>
         </div>
