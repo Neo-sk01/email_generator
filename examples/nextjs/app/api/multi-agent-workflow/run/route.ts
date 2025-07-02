@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Langbase } from "langbase";
+import { createPerplexity } from '@ai-sdk/perplexity';
+import { generateText } from 'ai';
 
 // It's highly recommended to move this to your .env.local file
 process.env.EXA_API_KEY = 'cfedf9ae-f36e-4743-9dd1-725bd9ba6214';
@@ -24,37 +26,27 @@ export async function POST(req: NextRequest) {
     console.log(body);
     console.log("-----------------------------------------");
 
-    // == Step 1: Use the Langbase Web Search Tool directly ==
-    if (!process.env.LANGBASE_API_KEY) {
-      throw new Error("LANGBASE_API_KEY environment variable is not set.");
-    }
-    const langbase = new Langbase({ apiKey: process.env.LANGBASE_API_KEY });
-    
-    // Use the custom research topic if provided, otherwise fall back to a more targeted default.
+    // == Step 1: Use the Vercel AI SDK with Perplexity for Web Search ==
     const searchQuery = customResearchTopic || `Find recent news or developments about ${recipientName} from ${recipientCompany}. Their LinkedIn profile is ${linkedinUrl}. The goal is to find a personalization point like: ${personalizationPoint}`;
     
-    console.log("---------- Sending Search Query to Exa ----------");
+    console.log("---------- Sending Search Query to Perplexity ----------");
     console.log(searchQuery);
-    console.log("-----------------------------------------------");
+    console.log("----------------------------------------------------");
 
-    const searchResults = await langbase.tools.webSearch({
-      service: 'exa',
-      query: searchQuery,
-      apiKey: 'cfedf9ae-f36e-4743-9dd1-725bd9ba6214',
-      totalResults: 3,
+    const perplexity = createPerplexity({
+      apiKey: process.env.PERPLEXITY_API_KEY,
     });
 
-    let researchResult = "No specific recent news found.";
-    if (searchResults && searchResults.length > 0) {
-      researchResult = searchResults.map((result: any, index: number) => 
-        `Source ${index + 1}: "${result.title}"\nURL: ${result.url}\nSnippet: ${result.content}`
-      ).join('\n\n');
-    }
+    const { text: researchResult } = await generateText({
+        model: perplexity('sonar-pro'),
+        prompt: searchQuery,
+    });
+    
     console.log("---------- Formatted Web Research Result ----------");
     console.log(researchResult);
     console.log("-------------------------------------------------");
 
-    // == Step 2: Generate the final email with a more concise prompt ==
+    // == Step 2: Generate the final email with the research result (using Langbase) ==
     const finalPrompt = `
       First, internally summarize the key takeaways from the following research material:
       ---
