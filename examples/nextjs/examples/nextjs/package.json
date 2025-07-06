@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/papaparse": "^5.3.16"
+  },
+  "dependencies": {
+    "@radix-ui/react-toast": "^1.2.14",
+    "geist": "^1.4.2"
+  }
+}
